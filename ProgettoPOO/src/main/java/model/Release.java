@@ -8,7 +8,7 @@ public class Release {
     private String tipoFormato;
     private Date dataPubblicazione;
     private String stato;
-}
+
     public String getCodiceCatalogo() {
         return codiceCatalogo;
     }
@@ -55,5 +55,6 @@ public class Release {
         this.tipoFormato = tipoFormato;
         this.dataPubblicazione = dataPubblicazione;
         this.stato = stato;
+    }
     }
 

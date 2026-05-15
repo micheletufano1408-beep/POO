@@ -4,7 +4,7 @@ public class RoyaltyReport {
     private String idReport;
     private String periodoRiferimento;
     private Double ricaviTotali;
-}
+
     public String getIdReport() {
         return idReport;
     }
@@ -34,4 +34,5 @@ public class RoyaltyReport {
         this.periodoRiferimento = periodoRiferimento;
         this.ricaviTotali = ricaviTotali;
     }
+}
 

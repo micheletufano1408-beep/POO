@@ -7,7 +7,7 @@ public class Personale {
     private String nome;
     private String cognome;
     private Date dataAssunzione;
-}
+
     public String getIdDipendente() {
         return idDipendente;
     }
@@ -46,6 +46,9 @@ public class Personale {
         this.cognome = cognome;
         this.dataAssunzione = dataAssunzione;
     }
+    }
+
+
 
 
 
