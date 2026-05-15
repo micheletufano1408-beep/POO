@@ -4,7 +4,7 @@ public class Dipartimento {
     private String nomeDipartimento;
     private Double budgetAnnuale;
     private String idDipartimento;
-}
+
     public String getNomeDipartimento() {
         return nomeDipartimento;
     }
@@ -33,5 +33,6 @@ public class Dipartimento {
         this.nomeDipartimento = nomeDipartimento;
         this.budgetAnnuale = budgetAnnuale;
         this.idDipartimento = idDipartimento;
+    }
     }
 

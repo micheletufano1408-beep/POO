@@ -4,7 +4,7 @@ public class CampagnaMarketing {
     private String idCampagna;
     private String piattaforma;
     private Double costoStimato;
-}
+
     public String getIdCampagna() {
         return idCampagna;
     }
@@ -33,5 +33,6 @@ public class CampagnaMarketing {
         this.idCampagna = idCampagna;
         this.piattaforma = piattaforma;
         this.costoStimato = costoStimato;
+    }
     }
 

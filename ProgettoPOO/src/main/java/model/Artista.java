@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.lang.String;
 
 public class Artista {
     private String nomeArte;
@@ -8,7 +9,7 @@ public class Artista {
     private Date dataInizioContratto;
     private Date dataFineContratto;
     private String idArtista;
-}
+
     public String getNomeArte() {
         return nomeArte;
     }
@@ -56,6 +57,6 @@ public class Artista {
         this.dataFineContratto = dataFineContratto;
         this.idArtista = idArtista;
     }
-
+}
 
 
