@@ -1,38 +1,32 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Dipartimento {
+    private String idDipartimento;
     private String nomeDipartimento;
     private Double budgetAnnuale;
-    private String idDipartimento;
 
-    public String getNomeDipartimento() {
-        return nomeDipartimento;
-    }
+    // Relazione: un Dipartimento finanzia molte Campagne Marketing
+    private List<CampagnaMarketing> campagneFinanziate;
 
-    public void setNomeDipartimento(String nomeDipartimento) {
-        this.nomeDipartimento = nomeDipartimento;
-    }
-
-    public Double getBudgetAnnuale() {
-        return budgetAnnuale;
-    }
-
-    public void setBudgetAnnuale(Double budgetAnnuale) {
-        this.budgetAnnuale = budgetAnnuale;
-    }
-
-    public String getIdDipartimento() {
-        return idDipartimento;
-    }
-
-    public void setIdDipartimento(String idDipartimento) {
+    public Dipartimento(String idDipartimento, String nomeDipartimento, Double budgetAnnuale) {
         this.idDipartimento = idDipartimento;
-    }
-
-    public Dipartimento(String nomeDipartimento, Double budgetAnnuale, String idDipartimento) {
         this.nomeDipartimento = nomeDipartimento;
         this.budgetAnnuale = budgetAnnuale;
-        this.idDipartimento = idDipartimento;
-    }
+        this.campagneFinanziate = new ArrayList<>();
     }
 
+    public String getIdDipartimento() { return idDipartimento; }
+    public void setIdDipartimento(String idDipartimento) { this.idDipartimento = idDipartimento; }
+
+    public String getNomeDipartimento() { return nomeDipartimento; }
+    public void setNomeDipartimento(String nomeDipartimento) { this.nomeDipartimento = nomeDipartimento; }
+
+    public Double getBudgetAnnuale() { return budgetAnnuale; }
+    public void setBudgetAnnuale(Double budgetAnnuale) { this.budgetAnnuale = budgetAnnuale; }
+
+    public List<CampagnaMarketing> getCampagneFinanziate() { return campagneFinanziate; }
+    public void setCampagneFinanziate(List<CampagnaMarketing> campagneFinanziate) { this.campagneFinanziate = campagneFinanziate; }
+}

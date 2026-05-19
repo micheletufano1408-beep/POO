@@ -1,21 +1,23 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tecnico extends Personale {
-    private Double bonusPercentuale;
+    private String ruoloSpecializzato;
 
-    public Double getBonusPercentuale() {
-        return bonusPercentuale;
-    }
+    private List<Release> releaseLavorate;
 
-    public void setBonusPercentuale(Double bonusPercentuale) {
-        this.bonusPercentuale = bonusPercentuale;
-    }
-
-    public Tecnico(String idDipendente, String nome, String cognome, LocalDate dataAssunzione, Double bonusPercentuale) {
+    public Tecnico(String idDipendente, String nome, String cognome, LocalDate dataAssunzione, String ruoloSpecializzato) {
         super(idDipendente, nome, cognome, dataAssunzione);
-        this.bonusPercentuale = bonusPercentuale;
-    }
+        this.ruoloSpecializzato = ruoloSpecializzato;
+        this.releaseLavorate = new ArrayList<>();
     }
 
+    public String getRuoloSpecializzato() { return ruoloSpecializzato; }
+    public void setRuoloSpecializzato(String ruoloSpecializzato) { this.ruoloSpecializzato = ruoloSpecializzato; }
+
+    public List<Release> getReleaseLavorate() { return releaseLavorate; }
+    public void setReleaseLavorate(List<Release> releaseLavorate) { this.releaseLavorate = releaseLavorate; }
+}
