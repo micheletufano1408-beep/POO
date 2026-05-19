@@ -9,6 +9,7 @@ public class Artista {
     private Date dataInizioContratto;
     private Date dataFineContratto;
     private String idArtista;
+    private String prova;
 
     public String getNomeArte() {
         return nomeArte;
