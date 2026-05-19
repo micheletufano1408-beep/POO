@@ -1,15 +1,13 @@
 package model;
 
-import java.util.Date;
-import java.lang.String;
+import java.time.LocalDate;
 
 public class Artista {
     private String nomeArte;
     private String genereMusicale;
-    private Date dataInizioContratto;
-    private Date dataFineContratto;
+    private LocalDate dataInizioContratto;
+    private LocalDate dataFineContratto;
     private String idArtista;
-    private String prova;
 
     public String getNomeArte() {
         return nomeArte;
@@ -27,19 +25,19 @@ public class Artista {
         this.genereMusicale = genereMusicale;
     }
 
-    public Date getDataInizioContratto() {
+    public LocalDate getDataInizioContratto() {
         return dataInizioContratto;
     }
 
-    public void setDataInizioContratto(Date dataInizioContratto) {
+    public void setDataInizioContratto(LocalDate dataInizioContratto) {
         this.dataInizioContratto = dataInizioContratto;
     }
 
-    public Date getDataFineContratto() {
+    public LocalDate getDataFineContratto() {
         return dataFineContratto;
     }
 
-    public void setDataFineContratto(Date dataFineContratto) {
+    public void setDataFineContratto(LocalDate dataFineContratto) {
         this.dataFineContratto = dataFineContratto;
     }
 
@@ -51,7 +49,7 @@ public class Artista {
         this.idArtista = idArtista;
     }
 
-    public Artista(String nomeArte, String genereMusicale, Date dataInizioContratto, Date dataFineContratto, String idArtista) {
+    public Artista(String nomeArte, String genereMusicale, LocalDate dataInizioContratto, LocalDate dataFineContratto, String idArtista) {
         this.nomeArte = nomeArte;
         this.genereMusicale = genereMusicale;
         this.dataInizioContratto = dataInizioContratto;

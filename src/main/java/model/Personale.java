@@ -1,12 +1,12 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Personale {
     private String idDipendente;
     private String nome;
     private String cognome;
-    private Date dataAssunzione;
+    private LocalDate dataAssunzione;
 
     public String getIdDipendente() {
         return idDipendente;
@@ -32,15 +32,15 @@ public class Personale {
         this.cognome = cognome;
     }
 
-    public Date getDataAssunzione() {
+    public LocalDate getDataAssunzione() {
         return dataAssunzione;
     }
 
-    public void setDataAssunzione(Date dataAssunzione) {
+    public void setDataAssunzione(LocalDate dataAssunzione) {
         this.dataAssunzione = dataAssunzione;
     }
 
-    public Personale(String idDipendente, String nome, String cognome, Date dataAssunzione) {
+    public Personale(String idDipendente, String nome, String cognome, LocalDate dataAssunzione) {
         this.idDipendente = idDipendente;
         this.nome = nome;
         this.cognome = cognome;

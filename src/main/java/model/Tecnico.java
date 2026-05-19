@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Tecnico extends Personale {
     private Double bonusPercentuale;
@@ -13,7 +13,7 @@ public class Tecnico extends Personale {
         this.bonusPercentuale = bonusPercentuale;
     }
 
-    public Tecnico(String idDipendente, String nome, String cognome, Date dataAssunzione, Double bonusPercentuale) {
+    public Tecnico(String idDipendente, String nome, String cognome, LocalDate dataAssunzione, Double bonusPercentuale) {
         super(idDipendente, nome, cognome, dataAssunzione);
         this.bonusPercentuale = bonusPercentuale;
     }

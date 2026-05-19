@@ -1,7 +1,11 @@
 package dao;
 
 public interface EsempioDAO {
-    	public EsempioImplementazionePostgresDAO();
+	void esempioQuery();
+
+	public void EsempioImplementazionePostgresDAO();
+
+
 
 
 }

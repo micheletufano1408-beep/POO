@@ -1,12 +1,12 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Release {
     private String codiceCatalogo;
     private String titolo;
     private String tipoFormato;
-    private Date dataPubblicazione;
+    private LocalDate dataPubblicazione;
     private String stato;
 
     public String getCodiceCatalogo() {
@@ -33,11 +33,11 @@ public class Release {
         this.tipoFormato = tipoFormato;
     }
 
-    public Date getDataPubblicazione() {
+    public LocalDate getDataPubblicazione() {
         return dataPubblicazione;
     }
 
-    public void setDataPubblicazione(Date dataPubblicazione) {
+    public void setDataPubblicazione(LocalDate dataPubblicazione) {
         this.dataPubblicazione = dataPubblicazione;
     }
 
@@ -49,7 +49,7 @@ public class Release {
         this.stato = stato;
     }
 
-    public Release(String codiceCatalogo, String titolo, String tipoFormato, Date dataPubblicazione, String stato) {
+    public Release(String codiceCatalogo, String titolo, String tipoFormato, LocalDate dataPubblicazione, String stato) {
         this.codiceCatalogo = codiceCatalogo;
         this.titolo = titolo;
         this.tipoFormato = tipoFormato;
