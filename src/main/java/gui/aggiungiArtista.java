@@ -26,8 +26,6 @@ public class aggiungiArtista {
     public aggiungiArtista(Controller controller) {
         this.controller = controller;
 
-        // POPOLIAMO IL MENU A TENDINA:
-        // Prendiamo i manager dal controller e li inseriamo nel menu
         for (Manager m : controller.getTuttiIManager()) {
             inserisciManager.addItem(m);
         }

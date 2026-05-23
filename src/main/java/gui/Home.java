@@ -13,6 +13,7 @@ public class Home {
     private JButton aggiungiArtistaButton;
     private JButton mostraArtistiButton; // Il tuo nuovo bottone
     private JTextArea areaTestoArtisti;  // Il tuo nuovo "schermo"
+    private JButton apriAggiungiManagerButton;
 
     private static JFrame frameHome;
     private Controller controller;
@@ -49,11 +50,26 @@ public class Home {
                     for (Artista a : lista) {
                         areaTestoArtisti.append("ID: " + a.getIdArtista() +
                                 " | Nome: " + a.getNomeArte() +
-                                " | Genere: " + a.getGenereMusicale() + "\n");
+                                " | Genere: " + a.getGenereMusicale() + "\n" +
+                                " | Manager: " + (a.getManager() != null ? a.getManager().toString() : "Nessuno") + "\n");
                     }
                 }
             }
         });
+apriAggiungiManagerButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFrame frameManager = new JFrame("Assunzione Nuovo Manager");
+        aggiungiManager schermataManager = new aggiungiManager(controller);
+
+        frameManager.setContentPane(schermataManager.getMainPanel());
+        frameManager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameManager.pack();
+        frameManager.setLocationRelativeTo(null);
+        frameManager.setVisible(true);
+    }
+
+});
     }
 
     public static void main(String[] args) {
