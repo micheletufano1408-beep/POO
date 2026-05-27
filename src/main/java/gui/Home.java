@@ -11,8 +11,8 @@ import java.util.List;
 public class Home {
     private JPanel mainPanel;
     private JButton aggiungiArtistaButton;
-    private JButton mostraArtistiButton; // Il tuo nuovo bottone
-    private JTextArea areaTestoArtisti;  // Il tuo nuovo "schermo"
+    private JButton mostraArtistiButton;
+    private JTextArea areaTestoArtisti;
     private JButton apriAggiungiManagerButton;
 
     private static JFrame frameHome;
@@ -38,14 +38,14 @@ public class Home {
         mostraArtistiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Chiediamo al controller di darci la lista
+
                 List<Artista> lista = controller.getTuttiGliArtisti();
 
-                // Se la lista è vuota
+
                 if (lista.isEmpty()) {
                     areaTestoArtisti.setText("Nessun artista presente nel sistema.");
                 } else {
-                    // Se ci sono artisti, puliamo lo schermo e li stampiamo uno per riga
+
                     areaTestoArtisti.setText("--- ELENCO ARTISTI ---\n\n");
                     for (Artista a : lista) {
                         areaTestoArtisti.append("ID: " + a.getIdArtista() +
