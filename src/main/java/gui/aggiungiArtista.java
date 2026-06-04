@@ -17,13 +17,27 @@ public class aggiungiArtista {
     private JTextField inserisciGenereMusicale;
     private JTextField inserisciDataInizio;
     private JTextField inserisciDataFine;
-
     private JComboBox<Manager> inserisciManager;
 
     private Controller controller;
+    private JFrame frame;
 
-    public aggiungiArtista(Controller controller) {
+    public aggiungiArtista(Controller controller, JFrame frameHome) {
         this.controller = controller;
+
+        frame = new JFrame("Inserimento nuovo Artista");
+        frame.setContentPane(mainPanel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                frameHome.setVisible(true);
+            }
+            });
 
         for (Manager m : controller.getTuttiIManager()) {
             inserisciManager.addItem(m);
@@ -32,7 +46,7 @@ public class aggiungiArtista {
         aggiungiQuestoArtistaAllaListaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                salvaDatiArtista();
+                salvaDatiArtista(frameHome);
             }
         });
     }
@@ -41,7 +55,7 @@ public class aggiungiArtista {
         return mainPanel;
     }
 
-    private void salvaDatiArtista(){
+    private void salvaDatiArtista(JFrame frameHome){
         try{
             String id = inserisciIdArtista.getText();
             String nome = inserisciNomeArte.getText();
@@ -56,11 +70,8 @@ public class aggiungiArtista {
 
             JOptionPane.showMessageDialog(mainPanel, "Artista " + nome + " aggiunto con successo!");
 
-            inserisciIdArtista.setText("");
-            inserisciNomeArte.setText("");
-            inserisciGenereMusicale.setText("");
-            inserisciDataInizio.setText("");
-            inserisciDataFine.setText("");
+            frameHome.setVisible(true);
+            frame.dispose();
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(mainPanel,

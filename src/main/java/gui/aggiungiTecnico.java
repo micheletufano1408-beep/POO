@@ -6,23 +6,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
-public class aggiungiManager {
+public class aggiungiTecnico {
     private JPanel mainPanel;
+    private JButton aggiungiTecnicoButton;
     private JTextField inserisciId;
     private JTextField inserisciNome;
     private JTextField inserisciCognome;
     private JTextField inserisciDataAssunzione;
-    private JTextField inserisciBonus;
-    private JButton confermaButton;
+    private JTextField inserisciRuolo;
 
     private Controller controller;
     private JFrame frame;
 
-    public aggiungiManager(Controller controller, JFrame frameHome){
+    public aggiungiTecnico(Controller controller, JFrame frameHome) {
         this.controller = controller;
 
-
-        frame = new JFrame("Assunzione nuovo Manager");
+        frame = new JFrame("Assunzione nuovo Tecnico");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
@@ -35,37 +34,34 @@ public class aggiungiManager {
                 frameHome.setVisible(true);
             }
         });
-
-        confermaButton.addActionListener(new ActionListener() {
+        aggiungiTecnicoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                salvaManager(frameHome);
+                salvaTecnico(frameHome);
             }
         });
     }
 
-    public JPanel getMainPanel(){
-
+    public JPanel getMainPanel() {
         return mainPanel;
     }
-    private void salvaManager(JFrame frameHome){
+
+    private void salvaTecnico(JFrame frameHome) {
         try {
             String id = inserisciId.getText();
             String nome = inserisciNome.getText();
             String cognome = inserisciCognome.getText();
             LocalDate data = LocalDate.parse(inserisciDataAssunzione.getText());
-            Double bonus = Double.parseDouble(inserisciBonus.getText());
+            String ruolo = inserisciRuolo.getText();
 
-            controller.registraNuovoManager(id, nome, cognome, data, bonus);
+            controller.registraNuovoTecnico(id, nome, cognome, data, ruolo);
 
-            JOptionPane.showMessageDialog(mainPanel, "Manager " + nome + " " + cognome + " assunto con successo!");
+            JOptionPane.showMessageDialog(mainPanel, "Tecnico " + nome + " " + cognome + " assunto con successo!");
 
-           frameHome.setVisible(true);
-           frame.dispose();
-
-        }catch (Exception ex){
-            JOptionPane.showMessageDialog(mainPanel, "Errore nell'inserimento: " + ex.getMessage() + "\nVerifica il formato dei dati (Data : YYYY-MM-DD, Bonus: Numero)", "Errore",JOptionPane.ERROR_MESSAGE);
+            frameHome.setVisible(true);
+            frame.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Errore nell'inserimento: " + ex.getMessage() + "\nVerifica il formato dei dati (Data: YYYY-MM-DD)", "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

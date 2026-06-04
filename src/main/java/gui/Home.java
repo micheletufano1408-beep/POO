@@ -14,24 +14,20 @@ public class Home {
     private JButton mostraArtistiButton;
     private JTextArea areaTestoArtisti;
     private JButton apriAggiungiManagerButton;
+    private JButton assumiNuovoTecnicoButton;
+    private JButton aggiungiReleaseButton;
 
     private static JFrame frameHome;
     private Controller controller;
 
     public Home() {
-        controller = new Controller();
+        this.controller = new Controller();
 
         aggiungiArtistaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frameAggiungi = new JFrame("Inserimento nuovo Artista");
-                aggiungiArtista schermataAggiungi = new aggiungiArtista(controller);
-
-                frameAggiungi.setContentPane(schermataAggiungi.getMainPanel());
-                frameAggiungi.setDefaultCloseOperation((JFrame.DISPOSE_ON_CLOSE));
-                frameAggiungi.pack();
-                frameAggiungi.setLocationRelativeTo(null);
-                frameAggiungi.setVisible(true);
+                new aggiungiArtista(controller, frameHome);
+                frameHome.setVisible(false);
             }
         });
 
@@ -59,17 +55,25 @@ public class Home {
 apriAggiungiManagerButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
-        JFrame frameManager = new JFrame("Assunzione Nuovo Manager");
-        aggiungiManager schermataManager = new aggiungiManager(controller);
-
-        frameManager.setContentPane(schermataManager.getMainPanel());
-        frameManager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frameManager.pack();
-        frameManager.setLocationRelativeTo(null);
-        frameManager.setVisible(true);
+       new aggiungiManager(controller, frameHome);
+       frameHome.setVisible(false);
     }
 
 });
+        assumiNuovoTecnicoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new aggiungiTecnico(controller, frameHome);
+                frameHome.setVisible(false);
+            }
+        });
+        aggiungiReleaseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new aggiungiRelease(controller, frameHome);
+                frameHome.setVisible(false);
+            }
+        });
     }
 
     public static void main(String[] args) {
