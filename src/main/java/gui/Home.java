@@ -16,6 +16,8 @@ public class Home {
     private JButton apriAggiungiManagerButton;
     private JButton assumiNuovoTecnicoButton;
     private JButton aggiungiReleaseButton;
+    private JButton creaUnaCampagnaDiButton;
+    private JButton aggiungiUnaRoyaltyReportButton;
 
     private static JFrame frameHome;
     private Controller controller;
@@ -74,13 +76,27 @@ apriAggiungiManagerButton.addActionListener(new ActionListener() {
                 frameHome.setVisible(false);
             }
         });
+        creaUnaCampagnaDiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new aggiungiCampagnaMarketing(controller, frameHome);
+                frameHome.setVisible(false);
+            }
+        });
+        aggiungiUnaRoyaltyReportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new aggiungiRoyaltyReport(controller, frameHome);
+                frameHome.setVisible(false);
+            }
+        });
     }
 
     public static void main(String[] args) {
         frameHome = new JFrame("Home Page Discografica");
         frameHome.setContentPane(new Home().mainPanel);
         frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameHome.setSize(500, 400);
+        frameHome.setSize(750, 500);
         frameHome.setLocationRelativeTo(null);
         frameHome.setVisible(true);
     }

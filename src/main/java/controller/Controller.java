@@ -42,6 +42,7 @@ public class Controller {
     }
 
     public List<Artista> getTuttiGliArtisti() {
+
         return artistiInMemoria;
     }
 
@@ -88,7 +89,18 @@ public class Controller {
     }
 
     public List<Release> getTutteLeRelease() {
+
         return releaseInMemoria;
+    }
+    //METODI PER ROYALTY REPORT
+    public void registraRoyaltyReport(String idReport, String periodo, Double ricavi, Release release) throws Exception {
+        if (idReport == null || idReport.trim().isEmpty()) {
+            throw new Exception("L'ID del report non può essere vuoto.");
+        }
+
+        model.RoyaltyReport nuovoReport = new model.RoyaltyReport(idReport, periodo, ricavi, release);
+
+        System.out.println("[CONTROLLER LOG] Report registrato: " + periodo + " | Ricavi: €" + ricavi + " | Release: " + release.getTitolo());
     }
     // --- METODI PER CAMPAGNE MARKETING ---
     public void registraCampagnaMarketing(String id, String piattaforma, Double costo, Dipartimento dipartimento, Release release) {

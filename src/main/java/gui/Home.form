@@ -1,71 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.Home">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="20" vgap="20">
+    <margin top="25" left="25" bottom="25" right="25"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="700" height="500"/>
     </constraints>
     <properties/>
-    <border type="none"/>
+    <border type="none" title="Dashboard Casa Discografica"/>
     <children>
-      <grid id="9e26" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+
+      <!-- COLONNA SINISTRA: I 6 bottoni operativi -->
+      <component id="93e48" class="javax.swing.JButton" binding="apriAggiungiManagerButton">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
-        <border type="none" title="Lista degli Artisti"/>
-        <children>
-          <component id="4f7e" class="javax.swing.JButton" binding="aggiungiArtistaButton" default-binding="true">
-            <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Aggiungi artista"/>
-            </properties>
-          </component>
-          <component id="9ddd2" class="javax.swing.JTextArea" binding="areaTestoArtisti">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="93e48" class="javax.swing.JButton" binding="apriAggiungiManagerButton">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Assumi nuovo manager"/>
-            </properties>
-          </component>
-          <component id="f3609" class="javax.swing.JButton" binding="assumiNuovoTecnicoButton" default-binding="true">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Assumi nuovo tecnico"/>
-            </properties>
-          </component>
-          <component id="461d1" class="javax.swing.JButton" binding="mostraArtistiButton" default-binding="true">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Mostra artisti"/>
-            </properties>
-          </component>
-          <component id="ccbb3" class="javax.swing.JButton" binding="aggiungiReleaseButton" default-binding="true">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Aggiungi release"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
+        <properties><text value="💼 Assumi Nuovo Manager"/></properties>
+      </component>
+
+      <component id="f3609" class="javax.swing.JButton" binding="assumiNuovoTecnicoButton">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties><text value="🎧 Assumi Nuovo Tecnico"/></properties>
+      </component>
+
+      <component id="4f7e" class="javax.swing.JButton" binding="aggiungiArtistaButton">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties><text value="🎤 Aggiungi Artista"/></properties>
+      </component>
+
+      <component id="ccbb3" class="javax.swing.JButton" binding="aggiungiReleaseButton">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties><text value="💿 Aggiungi Release"/></properties>
+      </component>
+
+      <component id="ad601" class="javax.swing.JButton" binding="creaUnaCampagnaDiButton">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties><text value="📢 Crea Campagna Marketing"/></properties>
+      </component>
+
+      <component id="ecde" class="javax.swing.JButton" binding="aggiungiUnaRoyaltyReportButton">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties><text value="💰 Aggiungi Royalty Report"/></properties>
+      </component>
+
+      <!-- COLONNA DESTRA: Bottone e Area di Testo per gli Artisti -->
+      <component id="461d1" class="javax.swing.JButton" binding="mostraArtistiButton">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties><text value="📋 Mostra Elenco Artisti"/></properties>
+      </component>
+
+      <component id="9ddd2" class="javax.swing.JTextArea" binding="areaTestoArtisti">
+        <constraints>
+          <grid row="1" column="1" row-span="5" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="350" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <editable value="false"/>
+        </properties>
+      </component>
+
     </children>
   </grid>
 </form>
