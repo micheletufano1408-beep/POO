@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 public class aggiungiArtista {
     private JPanel mainPanel;
-    private JTextField aggiungiArtistaAllaListaTextField;
     private JButton aggiungiQuestoArtistaAllaListaButton;
     private JTextField inserisciIdArtista;
     private JTextField inserisciNomeArte;

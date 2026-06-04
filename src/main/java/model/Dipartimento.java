@@ -8,7 +8,6 @@ public class Dipartimento {
     private String nomeDipartimento;
     private Double budgetAnnuale;
 
-    // Relazione: un Dipartimento finanzia molte Campagne Marketing
     private List<CampagnaMarketing> campagneFinanziate;
 
     public Dipartimento(String idDipartimento, String nomeDipartimento, Double budgetAnnuale) {
