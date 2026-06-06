@@ -25,7 +25,7 @@ public class aggiungiManager {
         frame = new JFrame("Assunzione nuovo Manager");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
+        frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 

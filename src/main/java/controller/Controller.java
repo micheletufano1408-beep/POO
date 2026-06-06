@@ -9,7 +9,7 @@ import java.util.List;
 public class Controller {
 
 
-    private ManagerDAO managerDAO;
+    private dao.ManagerDAO managerDAO;
 
     private List<Artista> artistiInMemoria;
     private List<Dipartimento> dipartimentiInMemoria;
@@ -17,33 +17,44 @@ public class Controller {
     private List<Manager> managerInMemoria;
     private List<Tecnico> tecniciInMemoria;
     private List<Release> releaseInMemoria;
-
+    private dao.TecnicoDAO tecnicoDAO;
+    private dao.ArtistaDAO artistaDAO;
+    private dao.ReleaseDAO releaseDAO;
+    private dao.CampagnaMarketingDAO campagnaMarketingDAO;
+    private dao.DipartimentoDAO dipartimentoDAO;
+    private dao.RoyaltyReportDAO royaltyReportDAO;
 
     public Controller() {
 
-        this.managerDAO = new ManagerDAO();
+        this.managerDAO = new implementazionePostgresDAO.ManagerImplementazionePostgresDAO();
         this.artistiInMemoria = new ArrayList<>();
         this.dipartimentiInMemoria = new ArrayList<>();
         this.campagneInMemoria = new ArrayList<>();
         this.managerInMemoria = new ArrayList<>();
         this.tecniciInMemoria = new ArrayList<>();
         this.releaseInMemoria = new ArrayList<>();
+        this.tecnicoDAO = new implementazionePostgresDAO.TecnicoImplementazionePostgresDAO();
+        this.artistaDAO = new implementazionePostgresDAO.ArtistaImplementazionePostgresDAO();
+        this.releaseDAO = new implementazionePostgresDAO.ReleaseImplementazionePostgresDAO();
+        this.campagnaMarketingDAO = new implementazionePostgresDAO.CampagnaMarketingImplementazionePostgresDAO();
+        this.dipartimentoDAO = new implementazionePostgresDAO.DipartimentoImplementazionePostgresDAO();
+        this.royaltyReportDAO = new implementazionePostgresDAO.RoyaltyReportImplementazionePostgresDAO();
 
-        // Qualche dipartimento di default per i test
-        dipartimentiInMemoria.add(new Dipartimento("D01", "Marketing Digitale", 50000.0));
-        dipartimentiInMemoria.add(new Dipartimento("D02", "Eventi Live", 120000.0));
+
     }
 
     //METODI PER ARTISTA
     public void registraNuovoArtista(String id, String nomeArte, String genereMusicale, LocalDate dataInizio, LocalDate dataFine, Manager manager) {
         Artista nuovoArtista = new Artista(id, nomeArte, genereMusicale, dataInizio, dataFine, manager);
-        artistiInMemoria.add(nuovoArtista);
+
+        artistaDAO.salvaArtista(nuovoArtista);
+
         System.out.println("Artista Registrato: " + nuovoArtista.getNomeArte());
     }
 
     public List<Artista> getTuttiGliArtisti() {
 
-        return artistiInMemoria;
+        return artistaDAO.getTuttiGliArtisti();
     }
 
     //METODI PER MANAGER
@@ -72,7 +83,7 @@ public class Controller {
 
         model.Tecnico nuovoTecnico = new model.Tecnico(id, nome, cognome, dataAssunzione, ruoloSpecializzato);
 
-        tecniciInMemoria.add(nuovoTecnico);
+        tecnicoDAO.salvaTecnico(nuovoTecnico);
 
         System.out.println("[CONTROLLER LOG] Tecnico registrato: " + nome + " " + cognome + " | Ruolo: " + ruoloSpecializzato);
     }
@@ -83,14 +94,14 @@ public class Controller {
         }
 
         Release nuovaRelease = new Release(codice, titolo, tipoFormato, dataPubblicazione, stato, artista);
-        releaseInMemoria.add(nuovaRelease);
+        releaseDAO.salvaRelease(nuovaRelease);
 
         System.out.println("[CONTROLLER LOG] Release registrata: " + titolo + " dell'artista " + artista.getNomeArte());
     }
 
     public List<Release> getTutteLeRelease() {
 
-        return releaseInMemoria;
+        return releaseDAO.getTutteLeRelease();
     }
     //METODI PER ROYALTY REPORT
     public void registraRoyaltyReport(String idReport, String periodo, Double ricavi, Release release) throws Exception {
@@ -100,7 +111,7 @@ public class Controller {
 
         model.RoyaltyReport nuovoReport = new model.RoyaltyReport(idReport, periodo, ricavi, release);
 
-        System.out.println("[CONTROLLER LOG] Report registrato: " + periodo + " | Ricavi: €" + ricavi + " | Release: " + release.getTitolo());
+        royaltyReportDAO.salvaRoyaltyReport(nuovoReport);
     }
     // --- METODI PER CAMPAGNE MARKETING ---
     public void registraCampagnaMarketing(String id, String piattaforma, Double costo, Dipartimento dipartimento, Release release) {
@@ -110,7 +121,7 @@ public class Controller {
         }
 
         CampagnaMarketing nuovaCampagna = new CampagnaMarketing(id, piattaforma, costo, release, dipartimento);
-        campagneInMemoria.add(nuovaCampagna);
+        campagnaMarketingDAO.salvaCampagnaMarketing(nuovaCampagna);
 
         Double nuovoBudget = dipartimento.getBudgetAnnuale() - costo;
         dipartimento.setBudgetAnnuale(nuovoBudget);
@@ -119,6 +130,7 @@ public class Controller {
     }
 
     public List<Dipartimento> getTuttiIDipartimenti() {
-        return dipartimentiInMemoria;
+
+        return dipartimentoDAO.getTuttiIDipartimenti();
     }
 }

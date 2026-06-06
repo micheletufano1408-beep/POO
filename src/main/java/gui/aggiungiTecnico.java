@@ -24,7 +24,7 @@ public class aggiungiTecnico {
         frame = new JFrame("Assunzione nuovo Tecnico");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
+        frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 

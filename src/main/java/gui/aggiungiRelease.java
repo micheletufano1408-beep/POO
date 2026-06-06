@@ -27,7 +27,7 @@ public class aggiungiRelease {
         frame = new JFrame("Pubblicazione Nuova Release");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
+        frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 

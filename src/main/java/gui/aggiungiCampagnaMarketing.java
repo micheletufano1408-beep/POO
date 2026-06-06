@@ -26,9 +26,10 @@ public class aggiungiCampagnaMarketing {
         frame = new JFrame("Nuova Campagna Marketing");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
+        frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

@@ -57,4 +57,8 @@ public class Release {
 
     public List<RoyaltyReport> getRoyaltyReports() { return royaltyReports; }
     public void setRoyaltyReports(List<RoyaltyReport> royaltyReports) { this.royaltyReports = royaltyReports; }
+    @Override
+    public String toString() {
+        return this.titolo + " [" + this.codiceCatalogo + ", " + this.artista + "]";
+    }
 }

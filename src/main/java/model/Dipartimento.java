@@ -28,4 +28,9 @@ public class Dipartimento {
 
     public List<CampagnaMarketing> getCampagneFinanziate() { return campagneFinanziate; }
     public void setCampagneFinanziate(List<CampagnaMarketing> campagneFinanziate) { this.campagneFinanziate = campagneFinanziate; }
+
+    @Override
+    public String toString() {
+        return this.nomeDipartimento;
+    }
 }
