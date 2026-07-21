@@ -23,6 +23,7 @@ public class Controller {
     private dao.CampagnaMarketingDAO campagnaMarketingDAO;
     private dao.DipartimentoDAO dipartimentoDAO;
     private dao.RoyaltyReportDAO royaltyReportDAO;
+    private dao.UtenteDAO utenteDAO;
 
     public Controller() {
 
@@ -39,6 +40,7 @@ public class Controller {
         this.campagnaMarketingDAO = new implementazionePostgresDAO.CampagnaMarketingImplementazionePostgresDAO();
         this.dipartimentoDAO = new implementazionePostgresDAO.DipartimentoImplementazionePostgresDAO();
         this.royaltyReportDAO = new implementazionePostgresDAO.RoyaltyReportImplementazionePostgresDAO();
+        this.utenteDAO = new implementazionePostgresDAO.UtenteImplementazioneMockDAO();
 
 
     }
@@ -132,5 +134,9 @@ public class Controller {
     public List<Dipartimento> getTuttiIDipartimenti() {
 
         return dipartimentoDAO.getTuttiIDipartimenti();
+    }
+
+    public boolean effettuaLogin(String username, String password){
+        return utenteDAO.verificaLogin(username, password);
     }
 }
