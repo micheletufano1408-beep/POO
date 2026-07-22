@@ -22,13 +22,13 @@ public class Home {
     private static JFrame frameHome;
     private Controller controller;
 
-    public Home() {
-        this.controller = new Controller();
+    public Home(Controller controller) {
+        this.controller = controller;
 
         aggiungiArtistaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new aggiungiArtista(controller, frameHome);
+                new aggiungiArtista(Home.this.controller, frameHome);
                 frameHome.setVisible(false);
             }
         });
@@ -37,7 +37,7 @@ public class Home {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                List<Artista> lista = controller.getTuttiGliArtisti();
+                List<Artista> lista = Home.this.controller.getTuttiGliArtisti();
 
 
                 if (lista.isEmpty()) {
@@ -57,7 +57,7 @@ public class Home {
 apriAggiungiManagerButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
-       new aggiungiManager(controller, frameHome);
+       new aggiungiManager(Home.this.controller, frameHome);
        frameHome.setVisible(false);
     }
 
@@ -65,39 +65,36 @@ apriAggiungiManagerButton.addActionListener(new ActionListener() {
         assumiNuovoTecnicoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new aggiungiTecnico(controller, frameHome);
+                new aggiungiTecnico(Home.this.controller, frameHome);
                 frameHome.setVisible(false);
             }
         });
         aggiungiReleaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new aggiungiRelease(controller, frameHome);
+                new aggiungiRelease(Home.this.controller, frameHome);
                 frameHome.setVisible(false);
             }
         });
         creaUnaCampagnaDiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new aggiungiCampagnaMarketing(controller, frameHome);
+                new aggiungiCampagnaMarketing(Home.this.controller, frameHome);
                 frameHome.setVisible(false);
             }
         });
         aggiungiUnaRoyaltyReportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new aggiungiRoyaltyReport(controller, frameHome);
+                new aggiungiRoyaltyReport(Home.this.controller, frameHome);
                 frameHome.setVisible(false);
             }
         });
-    }
-
-    public static void main(String[] args) {
         frameHome = new JFrame("Home Page Discografica");
-        frameHome.setContentPane(new Home().mainPanel);
+        frameHome.setContentPane(this.mainPanel);
         frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameHome.setSize(750, 500);
-        frameHome.setLocationRelativeTo(null);
+        frameHome.setLocationRelativeTo(null); // Centra lo schermo
         frameHome.setVisible(true);
     }
 }
