@@ -2,6 +2,7 @@ package implementazionePostgresDAO;
 
 import dao.ArtistaDAO;
 import database.ConnessioneDatabase;
+import eccezioni.DatabaseException;
 import model.Artista;
 
 import java.sql.*;
@@ -12,7 +13,7 @@ import java.util.List;
 public class ArtistaImplementazionePostgresDAO implements ArtistaDAO {
 
     @Override
-    public void salvaArtista(Artista artista) {
+    public void salvaArtista(Artista artista) throws DatabaseException {
         String sql = "INSERT INTO artista (id_artista, nome_arte, genere_musicale, data_inizio_contratto, data_fine_contratto, id_manager) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
@@ -31,19 +32,16 @@ public class ArtistaImplementazionePostgresDAO implements ArtistaDAO {
                 pstmt.setNull(6, java.sql.Types.VARCHAR);
             }
 
-            int righeInserite = pstmt.executeUpdate();
+            pstmt.executeUpdate();
 
-            if (righeInserite > 0) {
-                System.out.println("✅ Artista " + artista.getNomeArte() + " salvato con successo nel DB!");
-            }
+
 
         } catch (SQLException e) {
-            System.out.println(" Errore durante il salvataggio dell'artista.");
-            e.printStackTrace();
+            throw new DatabaseException("Impossibile salvare l'artista nel database. Errore tecnico: " + e.getMessage());
         }
     }
     @Override
-    public List<Artista> getTuttiGliArtisti() {
+    public List<Artista> getTuttiGliArtisti() throws DatabaseException{
         List<Artista> listaArtisti = new ArrayList<>();
 
         String sql = "SELECT a.*, m.nome AS mgr_nome, m.cognome AS mgr_cognome, m.data_assunzione AS mgr_data, m.bonus_percentuale AS mgr_bonus " +
@@ -78,8 +76,7 @@ public class ArtistaImplementazionePostgresDAO implements ArtistaDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Errore durante il recupero degli artisti dal Database.");
-            e.printStackTrace();
+            throw new DatabaseException("Impossibile trovare l'artista nel database. Errore tecnico: " + e.getMessage());
         }
 
         return listaArtisti;

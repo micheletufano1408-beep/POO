@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import eccezioni.DatabaseException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,11 +64,16 @@ public class Login {
                 String user = campoUsername.getText();
                 String pass = new String(campoPassword.getPassword());
 
-                if (controller.effettuaLogin(user, pass)) {
-                    frame.dispose();
-                    new Home(controller);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Credenziali errate!", "Errore Login", JOptionPane.ERROR_MESSAGE);
+                try {
+                    if (controller.effettuaLogin(user, pass)) {
+                        frame.dispose();
+                        new Home(controller);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Username o password errati!", "Credenziali errate", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+                catch (DatabaseException ex) {
+                    JOptionPane.showMessageDialog(frame, "Impossibile collegarsi al server.\nControlla che il database sia acceso.\nDettaglio: " + ex.getMessage(), "Errore di Connessione", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

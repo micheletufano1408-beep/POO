@@ -2,6 +2,7 @@ package implementazionePostgresDAO;
 
 import dao.ManagerDAO;
 import database.ConnessioneDatabase;
+import eccezioni.DatabaseException;
 import model.Manager;
 
 import java.sql.*;
@@ -12,7 +13,7 @@ import java.util.List;
 public class ManagerImplementazionePostgresDAO implements ManagerDAO {
 
     @Override
-    public void salvaManager(Manager manager) {
+    public void salvaManager(Manager manager) throws DatabaseException{
         String sql = "INSERT INTO manager (id_dipendente, nome, cognome, data_assunzione, bonus_percentuale) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
@@ -24,19 +25,16 @@ public class ManagerImplementazionePostgresDAO implements ManagerDAO {
             pstmt.setDate(4, Date.valueOf(manager.getDataAssunzione()));
             pstmt.setDouble(5, manager.getBonusPercentuale());
 
-            int righeInserite = pstmt.executeUpdate();
-            if (righeInserite > 0) {
-                System.out.println("Manager " + manager.getNome() + " salvato con successo nel Database!");
-            }
+            pstmt.executeUpdate();
+
 
         } catch (SQLException e) {
-            System.out.println("Errore durante il salvataggio del manager.");
-            e.printStackTrace();
+            throw new DatabaseException("Errore durante il salvataggio del manager: " + e.getMessage());
         }
     }
 
     @Override
-    public List<Manager> getTuttiIManager() {
+    public List<Manager> getTuttiIManager() throws DatabaseException {
         List<Manager> listaManager = new ArrayList<>();
         String sql = "SELECT * FROM manager";
 
@@ -56,8 +54,7 @@ public class ManagerImplementazionePostgresDAO implements ManagerDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Errore durante il recupero dei manager dal database.");
-            e.printStackTrace();
+            throw new DatabaseException("Errore durante la ricerca del manager: " + e.getMessage());
         }
 
         return listaManager;

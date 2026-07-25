@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import eccezioni.DatiInvalidiException;
+import eccezioni.DatabaseException;
 
 public class aggiungiTecnico {
     private JPanel mainPanel;
@@ -56,12 +58,16 @@ public class aggiungiTecnico {
 
             controller.registraNuovoTecnico(id, nome, cognome, data, ruolo);
 
-            JOptionPane.showMessageDialog(mainPanel, "Tecnico " + nome + " " + cognome + " assunto con successo!");
+            JOptionPane.showMessageDialog(mainPanel, "Tecnico " + nome + " " + cognome + " assunto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 
             frameHome.setVisible(true);
             frame.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(mainPanel, "Errore nell'inserimento: " + ex.getMessage() + "\nVerifica il formato dei dati (Data: YYYY-MM-DD)", "Errore", JOptionPane.ERROR_MESSAGE);
+        } catch (java.time.format.DateTimeParseException dtpe) {
+            JOptionPane.showMessageDialog(mainPanel, "Formato data errato!\nAssicurati di usare il formato YYYY-MM-DD.", "Errore Data", JOptionPane.WARNING_MESSAGE);
+        } catch (DatiInvalidiException ex) {
+            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Dati Mancanti", JOptionPane.WARNING_MESSAGE);
+        } catch (DatabaseException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Errore di connessione al DB:\n" + ex.getMessage(), "Errore Database", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

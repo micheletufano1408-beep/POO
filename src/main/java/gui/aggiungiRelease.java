@@ -1,6 +1,8 @@
 package gui;
 
 import controller.Controller;
+import eccezioni.DatabaseException;
+import eccezioni.DatiInvalidiException;
 import model.Artista;
 
 import javax.swing.*;
@@ -44,10 +46,13 @@ public class aggiungiRelease {
 
         inserisciStato.addItem("In lavorazione");
         inserisciStato.addItem("Rilasciato");
-
+    try {
         for (Artista a : controller.getTuttiGliArtisti()) {
             selezionaArtista.addItem(a);
         }
+    } catch (DatabaseException ex) {
+        JOptionPane.showMessageDialog(frame, "Impossibile caricare i dati dal database per i menu a tendina.", "Errore DB", JOptionPane.ERROR_MESSAGE);
+    }
 
         confermaButton.addActionListener(new ActionListener() {
             @Override
@@ -73,13 +78,18 @@ public class aggiungiRelease {
 
             controller.registraNuovaRelease(codice, titolo, formato, data, stato, artistaScelto);
 
-            JOptionPane.showMessageDialog(mainPanel, "Release '" + titolo + "' registrata con successo!");
+            JOptionPane.showMessageDialog(mainPanel, "Release '" + titolo + "' registrata con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 
             frameHome.setVisible(true);
             frame.dispose();
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(mainPanel, "Errore nell'inserimento: " + ex.getMessage() + "\nControlla il formato della data (YYYY-MM-DD)", "Errore", JOptionPane.ERROR_MESSAGE);
+        } catch (java.time.format.DateTimeParseException dtpe) {
+            JOptionPane.showMessageDialog(mainPanel, "Formato data errato!\nAssicurati di usare il formato YYYY-MM-DD.", "Errore Data", JOptionPane.WARNING_MESSAGE);
+        }catch (DatiInvalidiException ex) {
+            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Dati Mancanti", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (DatabaseException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Errore di connessione al DB:\n" + ex.getMessage(), "Errore Database", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

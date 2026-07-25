@@ -2,6 +2,7 @@ package implementazionePostgresDAO;
 
 import dao.RoyaltyReportDAO;
 import database.ConnessioneDatabase;
+import eccezioni.DatabaseException;
 import model.RoyaltyReport;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 public class RoyaltyReportImplementazionePostgresDAO implements RoyaltyReportDAO {
 
     @Override
-    public void salvaRoyaltyReport(RoyaltyReport report) {
+    public void salvaRoyaltyReport(RoyaltyReport report) throws DatabaseException{
         String sql = "INSERT INTO royalty_report (id_report, periodo_riferimento, ricavi_totali, codice_release) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
@@ -23,14 +24,11 @@ public class RoyaltyReportImplementazionePostgresDAO implements RoyaltyReportDAO
 
             pstmt.setString(4, report.getReleaseRiferimento().getCodiceCatalogo());
 
-            int righeInserite = pstmt.executeUpdate();
-            if (righeInserite > 0) {
-                System.out.println("Royalty Report '" + report.getIdReport() + "' salvato con successo nel DB!");
-            }
+            pstmt.executeUpdate();
+
 
         } catch (SQLException e) {
-            System.out.println("Errore durante il salvataggio del Royalty Report nel Database.");
-            e.printStackTrace();
+            throw new DatabaseException("Errore durante il salvataggio della Royalty Report: " + e.getMessage());
         }
     }
 }

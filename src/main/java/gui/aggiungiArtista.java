@@ -1,6 +1,8 @@
 package gui;
 
 import controller.Controller;
+import eccezioni.DatabaseException;
+import eccezioni.DatiInvalidiException;
 import model.Artista;
 import model.Manager;
 
@@ -37,10 +39,14 @@ public class aggiungiArtista {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 frameHome.setVisible(true);
             }
-            });
+        });
 
-        for (Manager m : controller.getTuttiIManager()) {
-            inserisciManager.addItem(m);
+        try {
+            for (Manager m : controller.getTuttiIManager()) {
+                inserisciManager.addItem(m);
+            }
+        } catch (DatabaseException ex) {
+            JOptionPane.showMessageDialog(frame, "Impossibile caricare la lista dei manager dal database.", "Errore DB", JOptionPane.ERROR_MESSAGE);
         }
 
         aggiungiQuestoArtistaAllaListaButton.addActionListener(new ActionListener() {
@@ -68,16 +74,20 @@ public class aggiungiArtista {
 
             controller.registraNuovoArtista(id, nome, genere, inizio, fine, managerSelezionato);
 
-            JOptionPane.showMessageDialog(mainPanel, "Artista " + nome + " aggiunto con successo!");
+            JOptionPane.showMessageDialog(mainPanel, "Artista " + nome + " aggiunto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 
             frameHome.setVisible(true);
             frame.dispose();
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(mainPanel,
-                    "Errore nell'inserimento: " + ex.getMessage() + "\n\n(Formato date richiesto: YYYY-MM-DD)",
-                    "Errore",
-                    JOptionPane.ERROR_MESSAGE);
+        }
+        catch (java.time.format.DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Formato data errato!\nAssicurati di usare il formato YYYY-MM-DD.", "Errore Data", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (DatiInvalidiException ex) {
+            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Dati Mancanti", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (DatabaseException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Errore di connessione al DB: \n" + ex.getMessage(), "Errore di Sistema", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

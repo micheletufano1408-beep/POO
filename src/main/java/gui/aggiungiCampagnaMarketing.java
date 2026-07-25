@@ -1,6 +1,9 @@
 package gui;
 
 import controller.Controller;
+import eccezioni.BudgetException;
+import eccezioni.DatabaseException;
+import eccezioni.DatiInvalidiException;
 import model.Dipartimento;
 import model.Release;
 
@@ -38,12 +41,16 @@ public class aggiungiCampagnaMarketing {
             }
         });
 
-        for (Dipartimento d : controller.getTuttiIDipartimenti()) {
-            selezionaDipartimento.addItem(d);
-        }
+        try {
+            for (Dipartimento d : controller.getTuttiIDipartimenti()) {
+                selezionaDipartimento.addItem(d);
+            }
 
-        for (Release r : controller.getTutteLeRelease()) {
-            selezionaRelease.addItem(r);
+            for (Release r : controller.getTutteLeRelease()) {
+                selezionaRelease.addItem(r);
+            }
+        } catch (DatabaseException ex) {
+            JOptionPane.showMessageDialog(frame, "Impossibile caricare i dati dal database per i menu a tendina.", "Errore DB", JOptionPane.ERROR_MESSAGE);
         }
 
         confermaButton.addActionListener(new ActionListener() {
@@ -68,20 +75,28 @@ public class aggiungiCampagnaMarketing {
             Release releaseScelta = (Release) selezionaRelease.getSelectedItem();
 
             if (dipScelto == null || releaseScelta == null) {
-                throw new Exception("Devi selezionare sia un Dipartimento che una Release!");
+                throw new DatiInvalidiException("Devi selezionare sia un Dipartimento che una Release!");
             }
 
             controller.registraCampagnaMarketing(id, piattaforma, costo, dipScelto, releaseScelta);
 
-            JOptionPane.showMessageDialog(mainPanel, "Campagna registrata con successo!");
+            JOptionPane.showMessageDialog(mainPanel, "Campagna registrata con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 
             frameHome.setVisible(true);
             frame.dispose();
 
-        } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(mainPanel, "Errore: Il costo deve essere un numero valido.", "Errore Input", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(mainPanel, "Errore: Il costo deve essere un numero valido.", "Errore Input", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (DatiInvalidiException ex) {
+            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Dati Mancanti", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (BudgetException ex) {
+            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Budget Superato", JOptionPane.WARNING_MESSAGE);
+        }
+        catch (DatabaseException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Errore di connessione al DB:\n" + ex.getMessage(), "Errore Database", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

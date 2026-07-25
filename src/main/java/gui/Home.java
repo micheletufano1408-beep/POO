@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import eccezioni.DatabaseException;
 import model.Artista;
 
 import javax.swing.*;
@@ -36,21 +37,25 @@ public class Home {
         mostraArtistiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    List<Artista> lista = Home.this.controller.getTuttiGliArtisti();
 
-                List<Artista> lista = Home.this.controller.getTuttiGliArtisti();
-
-
-                if (lista.isEmpty()) {
-                    areaTestoArtisti.setText("Nessun artista presente nel sistema.");
-                } else {
-
-                    areaTestoArtisti.setText("--- ELENCO ARTISTI ---\n\n");
-                    for (Artista a : lista) {
-                        areaTestoArtisti.append("ID: " + a.getIdArtista() +
-                                " | Nome: " + a.getNomeArte() +
-                                " | Genere: " + a.getGenereMusicale() + "\n" +
-                                " | Manager: " + (a.getManager() != null ? a.getManager().toString() : "Nessuno") + "\n");
+                    if (lista.isEmpty()) {
+                        areaTestoArtisti.setText("Nessun artista presente nel sistema.");
+                    } else {
+                        areaTestoArtisti.setText("--- ELENCO ARTISTI ---\n\n");
+                        for (Artista a : lista) {
+                            areaTestoArtisti.append("ID: " + a.getIdArtista() +
+                                    " | Nome: " + a.getNomeArte() +
+                                    " | Genere: " + a.getGenereMusicale() + "\n" +
+                                    " | Manager: " + (a.getManager() != null ? a.getManager().toString() : "Nessuno") + "\n");
+                        }
                     }
+                } catch (DatabaseException ex) {
+                    JOptionPane.showMessageDialog(frameHome,
+                            "Impossibile caricare gli artisti.\nDettaglio: " + ex.getMessage(),
+                            "Errore di Connessione",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

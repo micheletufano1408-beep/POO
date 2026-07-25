@@ -1,6 +1,8 @@
 package gui;
 
 import controller.Controller;
+import eccezioni.DatabaseException;
+import eccezioni.DatiInvalidiException;
 import model.Release;
 
 import javax.swing.*;
@@ -34,11 +36,14 @@ public class aggiungiRoyaltyReport {
                 frameHome.setVisible(true);
             }
         });
-
+    try {
         for (Release r : controller.getTutteLeRelease()) {
             selezionaRelease.addItem(r);
         }
+    } catch (DatabaseException ex) {
+        JOptionPane.showMessageDialog(frame, "Impossibile caricare i dati dal database per i menu a tendina.", "Errore DB", JOptionPane.ERROR_MESSAGE);
 
+    }
         confermaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,20 +65,22 @@ public class aggiungiRoyaltyReport {
             Release releaseScelta = (Release) selezionaRelease.getSelectedItem();
 
             if (releaseScelta == null) {
-                throw new Exception("Devi selezionare una Release!");
+                throw new DatiInvalidiException("Devi selezionare una Release!");
             }
 
             controller.registraRoyaltyReport(id, periodo, ricavi, releaseScelta);
 
-            JOptionPane.showMessageDialog(mainPanel, "Royalty Report salvato con successo!");
+            JOptionPane.showMessageDialog(mainPanel, "Royalty Report salvato con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
 
             frameHome.setVisible(true);
             frame.dispose();
 
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(mainPanel, "Errore: I ricavi devono essere un numero.", "Errore", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainPanel, "Errore: I ricavi devono essere un numero.", "Errore", JOptionPane.WARNING_MESSAGE);
+        } catch (DatiInvalidiException ex) {
+            JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Dati Mancanti", JOptionPane.WARNING_MESSAGE);
+        } catch (DatabaseException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Errore di connessione al DB:\n" + ex.getMessage(), "Errore Database", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

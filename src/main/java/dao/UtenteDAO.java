@@ -1,5 +1,7 @@
 package dao;
 
+import eccezioni.DatabaseException;
+
 public interface UtenteDAO {
-    boolean verificaLogin(String username, String password);
+    boolean verificaLogin(String username, String password) throws DatabaseException;
 }

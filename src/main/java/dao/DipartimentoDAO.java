@@ -1,8 +1,9 @@
 package dao;
 
+import eccezioni.DatabaseException;
 import model.Dipartimento;
 import java.util.List;
 
 public interface DipartimentoDAO {
-    List<Dipartimento> getTuttiIDipartimenti();
+    List<Dipartimento> getTuttiIDipartimenti() throws DatabaseException;
 }

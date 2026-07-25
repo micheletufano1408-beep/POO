@@ -2,8 +2,10 @@ package implementazionePostgresDAO;
 
 import dao.TecnicoDAO;
 import database.ConnessioneDatabase;
+import eccezioni.DatabaseException;
 import model.Tecnico;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 public class TecnicoImplementazionePostgresDAO implements TecnicoDAO {
 
     @Override
-    public void salvaTecnico(Tecnico tecnico) {
+    public void salvaTecnico(Tecnico tecnico) throws DatabaseException {
         String sql = "INSERT INTO tecnico (id_dipendente, nome, cognome, data_assunzione, ruolo_specializzato) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
@@ -24,15 +26,11 @@ public class TecnicoImplementazionePostgresDAO implements TecnicoDAO {
             pstmt.setDate(4, Date.valueOf(tecnico.getDataAssunzione()));
             pstmt.setString(5, tecnico.getRuoloSpecializzato());
 
-            int righeInserite = pstmt.executeUpdate();
+            pstmt.executeUpdate();
 
-            if (righeInserite > 0) {
-                System.out.println("✅ Tecnico " + tecnico.getNome() + " salvato con successo nel Database!");
-            }
 
         } catch (SQLException e) {
-            System.out.println("❌ Errore durante il salvataggio del Tecnico nel Database.");
-            e.printStackTrace();
+            throw new DatabaseException("Errore durante il salvataggio del tecnico: " + e.getMessage());
         }
     }
 }

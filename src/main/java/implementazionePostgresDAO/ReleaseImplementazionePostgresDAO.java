@@ -2,6 +2,7 @@ package implementazionePostgresDAO;
 
 import dao.ReleaseDAO;
 import database.ConnessioneDatabase;
+import eccezioni.DatabaseException;
 import model.Artista;
 import model.Release;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class ReleaseImplementazionePostgresDAO implements ReleaseDAO {
 
     @Override
-    public void salvaRelease(Release release) {
+    public void salvaRelease(Release release) throws DatabaseException{
 
         String sql = "INSERT INTO release (codice_catalogo, titolo, tipo_formato, data_pubblicazione, stato, id_artista) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -32,19 +33,16 @@ public class ReleaseImplementazionePostgresDAO implements ReleaseDAO {
 
             pstmt.setString(6, release.getArtista().getIdArtista());
 
-            int righe = pstmt.executeUpdate();
-            if (righe > 0) {
-                System.out.println("Release '" + release.getTitolo() + "' salvata con successo nel DB!");
-            }
+            pstmt.executeUpdate();
+
 
         } catch (SQLException e) {
-            System.out.println("Errore durante il salvataggio della Release.");
-            e.printStackTrace();
+            throw new DatabaseException("Errore durante il salvataggio della Release: " + e.getMessage());
         }
     }
 
     @Override
-    public List<Release> getTutteLeRelease() {
+    public List<Release> getTutteLeRelease() throws DatabaseException{
         List<Release> listaRelease = new ArrayList<>();
 
         String sql = "SELECT r.*, a.nome_arte, a.genere_musicale " +
@@ -73,8 +71,7 @@ public class ReleaseImplementazionePostgresDAO implements ReleaseDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Errore durante il recupero delle Release.");
-            e.printStackTrace();
+            throw new DatabaseException("Errore durante il recupero della release: " + e.getMessage());
         }
 
         return listaRelease;
