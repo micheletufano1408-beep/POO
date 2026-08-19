@@ -5,6 +5,7 @@ import database.ConnessioneDatabase;
 import eccezioni.DatabaseException;
 import model.CampagnaMarketing;
 
+import org.postgresql.util.PSQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,10 +25,19 @@ public class CampagnaMarketingImplementazionePostgresDAO implements CampagnaMark
             pstmt.setString(4, campagna.getDipartimentoFinanziatore().getIdDipartimento());
             pstmt.setString(5, campagna.getReleasePromossa().getCodiceCatalogo());
 
-            pstmt.executeUpdate(); // Rimosso l'if con il System.out.println
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DatabaseException("Errore durante il salvataggio della Campagna Marketing: " + e.getMessage());
+            String messaggioPulito = e.getMessage();
+
+            if (e instanceof PSQLException) {
+                PSQLException pgEx = (PSQLException) e;
+                if (pgEx.getServerErrorMessage() != null) {
+                    messaggioPulito = pgEx.getServerErrorMessage().getMessage();
+                }
+            }
+
+            throw new DatabaseException("Impossibile salvare la campagna di marketing.\n" + messaggioPulito);
         }
     }
 }

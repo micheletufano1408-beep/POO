@@ -4,6 +4,7 @@ import dao.ArtistaDAO;
 import database.ConnessioneDatabase;
 import eccezioni.DatabaseException;
 import model.Artista;
+import org.postgresql.util.PSQLException;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -37,7 +38,16 @@ public class ArtistaImplementazionePostgresDAO implements ArtistaDAO {
 
 
         } catch (SQLException e) {
-            throw new DatabaseException("Impossibile salvare l'artista nel database. Errore tecnico: " + e.getMessage());
+            String messaggioPulito = e.getMessage();
+
+            if (e instanceof PSQLException) {
+                PSQLException pgEx = (PSQLException) e;
+                if (pgEx.getServerErrorMessage() != null) {
+                    messaggioPulito = pgEx.getServerErrorMessage().getMessage();
+                }
+            }
+
+            throw new DatabaseException("Impossibile salvare l'artista.\n" + messaggioPulito);
         }
     }
     @Override

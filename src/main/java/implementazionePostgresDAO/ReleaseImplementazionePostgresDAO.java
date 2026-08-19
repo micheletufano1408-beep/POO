@@ -6,6 +6,7 @@ import eccezioni.DatabaseException;
 import model.Artista;
 import model.Release;
 
+import org.postgresql.util.PSQLException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -37,7 +38,16 @@ public class ReleaseImplementazionePostgresDAO implements ReleaseDAO {
 
 
         } catch (SQLException e) {
-            throw new DatabaseException("Errore durante il salvataggio della Release: " + e.getMessage());
+            String messaggioPulito = e.getMessage();
+
+            if (e instanceof PSQLException) {
+                PSQLException pgEx = (PSQLException) e;
+                if (pgEx.getServerErrorMessage() != null) {
+                    messaggioPulito = pgEx.getServerErrorMessage().getMessage();
+                }
+            }
+
+            throw new DatabaseException("Impossibile salvare la release.\n" + messaggioPulito);
         }
     }
 
