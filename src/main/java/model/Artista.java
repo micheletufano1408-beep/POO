@@ -13,7 +13,7 @@ public class Artista {
 
     private Manager manager;
 
-    private List<Release> pubblicazioni;
+
 
     public Artista(String idArtista, String nomeArte, String genereMusicale, LocalDate dataInizioContratto, LocalDate dataFineContratto, Manager manager) {
         this.idArtista = idArtista;
@@ -22,7 +22,7 @@ public class Artista {
         this.dataInizioContratto = dataInizioContratto;
         this.dataFineContratto = dataFineContratto;
         this.manager = manager;
-        this.pubblicazioni = new ArrayList<>();
+
     }
 
     public String getIdArtista() { return idArtista; }
@@ -43,8 +43,6 @@ public class Artista {
     public Manager getManager() { return manager; }
     public void setManager(Manager manager) { this.manager = manager; }
 
-    public List<Release> getPubblicazioni() { return pubblicazioni; }
-    public void setPubblicazioni(List<Release> pubblicazioni) { this.pubblicazioni = pubblicazioni; }
 
     @Override
     public String toString() {

@@ -8,13 +8,13 @@ public class Dipartimento {
     private String nomeDipartimento;
     private Double budgetAnnuale;
 
-    private List<CampagnaMarketing> campagneFinanziate;
+
 
     public Dipartimento(String idDipartimento, String nomeDipartimento, Double budgetAnnuale) {
         this.idDipartimento = idDipartimento;
         this.nomeDipartimento = nomeDipartimento;
         this.budgetAnnuale = budgetAnnuale;
-        this.campagneFinanziate = new ArrayList<>();
+
     }
 
     public String getIdDipartimento() { return idDipartimento; }
@@ -26,8 +26,7 @@ public class Dipartimento {
     public Double getBudgetAnnuale() { return budgetAnnuale; }
     public void setBudgetAnnuale(Double budgetAnnuale) { this.budgetAnnuale = budgetAnnuale; }
 
-    public List<CampagnaMarketing> getCampagneFinanziate() { return campagneFinanziate; }
-    public void setCampagneFinanziate(List<CampagnaMarketing> campagneFinanziate) { this.campagneFinanziate = campagneFinanziate; }
+
 
     @Override
     public String toString() {

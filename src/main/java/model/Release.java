@@ -13,11 +13,7 @@ public class Release {
 
     private Artista artista;
 
-    private List<Tecnico> tecniciAssegnati;
 
-    private List<CampagnaMarketing> campagneMarketing;
-
-    private List<RoyaltyReport> royaltyReports;
 
     public Release(String codiceCatalogo, String titolo, String tipoFormato, LocalDate dataPubblicazione, String stato, Artista artista) {
         this.codiceCatalogo = codiceCatalogo;
@@ -26,9 +22,7 @@ public class Release {
         this.dataPubblicazione = dataPubblicazione;
         this.stato = stato;
         this.artista = artista;
-        this.tecniciAssegnati = new ArrayList<>();
-        this.campagneMarketing = new ArrayList<>();
-        this.royaltyReports = new ArrayList<>();
+
     }
 
     public String getCodiceCatalogo() { return codiceCatalogo; }
@@ -49,14 +43,7 @@ public class Release {
     public Artista getArtista() { return artista; }
     public void setArtista(Artista artista) { this.artista = artista; }
 
-    public List<Tecnico> getTecniciAssegnati() { return tecniciAssegnati; }
-    public void setTecniciAssegnati(List<Tecnico> tecniciAssegnati) { this.tecniciAssegnati = tecniciAssegnati; }
 
-    public List<CampagnaMarketing> getCampagneMarketing() { return campagneMarketing; }
-    public void setCampagneMarketing(List<CampagnaMarketing> campagneMarketing) { this.campagneMarketing = campagneMarketing; }
-
-    public List<RoyaltyReport> getRoyaltyReports() { return royaltyReports; }
-    public void setRoyaltyReports(List<RoyaltyReport> royaltyReports) { this.royaltyReports = royaltyReports; }
     @Override
     public String toString() {
         return this.titolo + " [" + this.codiceCatalogo + ", " + this.artista + "]";
