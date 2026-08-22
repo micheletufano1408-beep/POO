@@ -86,4 +86,32 @@ public class ReleaseImplementazionePostgresDAO implements ReleaseDAO {
 
         return listaRelease;
     }
+    @Override
+    public List<Release> getReleaseDiArtista(String idArtista) throws DatabaseException {
+        List<Release> listaRelease = new ArrayList<>();
+        String query = "SELECT * FROM release WHERE id_artista = ?";
+
+        try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, idArtista);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Release r = new Release(
+                        rs.getString("codice_catalogo"),
+                        rs.getString("titolo"),
+                        rs.getString("tipo_formato"),
+                        rs.getDate("data_pubblicazione").toLocalDate(),
+                        rs.getString("stato"),
+                        null
+                );
+                listaRelease.add(r);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Errore durante la lettura delle release dell'artista:\n" + e.getMessage());
+        }
+
+        return listaRelease;
+    }
 }

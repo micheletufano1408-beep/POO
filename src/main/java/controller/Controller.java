@@ -94,16 +94,17 @@ public class Controller {
         if (codice == null || codice.trim().isEmpty() || artista == null || titolo == null || titolo.trim().isEmpty() || tipoFormato == null || tipoFormato.trim().isEmpty() || dataPubblicazione == null || stato == null || stato.trim().isEmpty()) {
             throw new DatiInvalidiException("Tutti i dettagli della release sono campi obbligatori.");
         }
-
         Release nuovaRelease = new Release(codice, titolo, tipoFormato, dataPubblicazione, stato, artista);
         releaseDAO.salvaRelease(nuovaRelease);
 
         System.out.println("Release registrata: " + titolo + " dell'artista " + artista.getNomeArte());
     }
-
     public List<Release> getTutteLeRelease() throws DatabaseException {
 
         return releaseDAO.getTutteLeRelease();
+    }
+    public List<Release> getReleaseDiArtista(String idArtista) throws DatabaseException {
+        return releaseDAO.getReleaseDiArtista(idArtista);
     }
     //METODI PER ROYALTY REPORT
     public void registraRoyaltyReport(String idReport, String periodo, Double ricavi, Release release) throws DatabaseException, DatiInvalidiException {
