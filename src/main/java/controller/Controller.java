@@ -83,7 +83,7 @@ public class Controller {
             throw new DatiInvalidiException("Tutti i dati del tecnico sono obbligatori.");
         }
 
-        model.Tecnico nuovoTecnico = new model.Tecnico(id, nome, cognome, dataAssunzione, ruoloSpecializzato);
+        Tecnico nuovoTecnico = new model.Tecnico(id, nome, cognome, dataAssunzione, ruoloSpecializzato);
 
         tecnicoDAO.salvaTecnico(nuovoTecnico);
 

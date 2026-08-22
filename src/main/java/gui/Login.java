@@ -27,7 +27,7 @@ public class Login {
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Crea un margine di 10 pixel tra ogni elemento
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
 
@@ -37,7 +37,7 @@ public class Login {
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        JTextField campoUsername = new JTextField(15); // 15 è la larghezza del campo
+        JTextField campoUsername = new JTextField(15);
         mainPanel.add(campoUsername, gbc);
 
         gbc.gridx = 0;
