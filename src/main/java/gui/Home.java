@@ -93,7 +93,7 @@ public class Home {
                             } else {
                                 StringBuilder messaggio = new StringBuilder("Release pubblicate da " + nomeArtista + ":\n\n");
                                 for (model.Release r : sueRelease) {
-                                    messaggio.append("🎵 ").append(r.getTitolo())
+                                    messaggio.append("").append(r.getTitolo())
                                             .append(" (Formato: ").append(r.getTipoFormato()).append(")\n");
                                 }
                                 JOptionPane.showMessageDialog(frameHome,
@@ -108,7 +108,7 @@ public class Home {
                                 "Errore DB",
                                 JOptionPane.ERROR_MESSAGE);
                     } catch (Exception ex) {
-                        ex.printStackTrace(); // Scrive l'errore rosso nella console di IntelliJ
+                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(frameHome,
                                 "ERRORE DI SISTEMA NASCOSTO:\n" + ex.getMessage(),
                                 "Bug Trovato!",

@@ -3,9 +3,11 @@ package controller;
 import eccezioni.BudgetException;
 import eccezioni.DatabaseException;
 import eccezioni.DatiInvalidiException;
+import implementazionePostgresDAO.UtenteImplementazionePostgresDAO;
 import model.*;
 import java.time.LocalDate;
 import java.util.List;
+
 
 public class Controller {
 
@@ -28,25 +30,17 @@ public class Controller {
         this.campagnaMarketingDAO = new implementazionePostgresDAO.CampagnaMarketingImplementazionePostgresDAO();
         this.dipartimentoDAO = new implementazionePostgresDAO.DipartimentoImplementazionePostgresDAO();
         this.royaltyReportDAO = new implementazionePostgresDAO.RoyaltyReportImplementazionePostgresDAO();
-        this.utenteDAO = new implementazionePostgresDAO.UtenteImplementazioneMockDAO();
+        this.utenteDAO = new UtenteImplementazionePostgresDAO();
 
 
     }
 
     //METODI PER ARTISTA
     public void registraNuovoArtista(String id, String nomeArte, String genereMusicale, LocalDate dataInizio, LocalDate dataFine, Manager manager)  throws DatiInvalidiException, DatabaseException {
-        if (nomeArte == null || nomeArte.trim().isEmpty()){
-            throw new DatiInvalidiException("Nome d'arte obbligatorio!");
+        if (nomeArte == null || nomeArte.trim().isEmpty() || id == null || id.trim().isEmpty()  || genereMusicale == null || genereMusicale.isEmpty() || dataInizio == null || dataFine == null) {
+            throw new DatiInvalidiException("Tutti i campi sono obbligatori");
         }
-        if (id == null || id.trim().isEmpty()){
-            throw new DatiInvalidiException("L'ID dell'artista è obbligatorio!");
-        }
-        if (genereMusicale == null || genereMusicale.isEmpty()){
-            throw new DatiInvalidiException("Il genere musciale dell'artista è obbligatorio!");
-        }
-        if (manager == null){
-            throw new DatiInvalidiException("Il manager dell'artista è obbligatorio!");
-        }
+
         Artista nuovoArtista = new Artista(id, nomeArte, genereMusicale, dataInizio, dataFine, manager);
 
         artistaDAO.salvaArtista(nuovoArtista);
@@ -108,25 +102,17 @@ public class Controller {
     }
     //METODI PER ROYALTY REPORT
     public void registraRoyaltyReport(String idReport, String periodo, Double ricavi, Release release) throws DatabaseException, DatiInvalidiException {
-        if (idReport == null || idReport.trim().isEmpty()) {
-            throw new DatiInvalidiException("L'ID del report non può essere vuoto.");
+        if (idReport == null || idReport.trim().isEmpty() ||  periodo == null || periodo.trim().isEmpty() || ricavi == null || release == null) {
+            throw new DatiInvalidiException("Tutti i dati sono obbligatori.");
         }
-        if (periodo == null || periodo.trim().isEmpty()) {
-            throw new DatiInvalidiException("Il periodo del report non può essere vuoto.");
-        }
-        if (ricavi == null){
-            throw new DatiInvalidiException("I ricavi del report sono obbligatori!");
-        }
-        if (release == null){
-            throw new DatiInvalidiException("La release dell'artista è obbligatorio!");
-        }
+
 
 
         RoyaltyReport nuovoReport = new model.RoyaltyReport(idReport, periodo, ricavi, release);
 
         royaltyReportDAO.salvaRoyaltyReport(nuovoReport);
     }
-    // --- METODI PER CAMPAGNE MARKETING ---
+    // METODI PER CAMPAGNE MARKETING
     public void registraCampagnaMarketing(String id, String piattaforma, Double costo, Dipartimento dipartimento, Release release) throws BudgetException, DatabaseException, DatiInvalidiException{
         if (costo > dipartimento.getBudgetAnnuale()) {
             throw new BudgetException("Il costo della campagna (" + costo + "€) supera il budget disponibile del dipartimento (" + dipartimento.getBudgetAnnuale() + "€).");
