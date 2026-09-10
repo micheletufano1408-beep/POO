@@ -1,5 +1,6 @@
 package controller;
 
+import dao.RoyaltyReportDAO;
 import eccezioni.BudgetException;
 import eccezioni.DatabaseException;
 import eccezioni.DatiInvalidiException;
@@ -83,6 +84,9 @@ public class Controller {
 
         System.out.println("Tecnico registrato: " + nome + " " + cognome + " | Ruolo: " + ruoloSpecializzato);
     }
+    public List<Tecnico> getTuttiITecnici() throws DatabaseException {
+        return tecnicoDAO.getTuttiITecnici();
+    }
     //METODI PER RELEASE
     public void registraNuovaRelease(String codice, String titolo, String tipoFormato, LocalDate dataPubblicazione, String stato, Artista artista) throws DatabaseException, DatiInvalidiException {
         if (codice == null || codice.trim().isEmpty() || artista == null || titolo == null || titolo.trim().isEmpty() || tipoFormato == null || tipoFormato.trim().isEmpty() || dataPubblicazione == null || stato == null || stato.trim().isEmpty()) {
@@ -112,6 +116,11 @@ public class Controller {
 
         royaltyReportDAO.salvaRoyaltyReport(nuovoReport);
     }
+    public List<RoyaltyReport> getRoyaltyReport() throws DatabaseException {
+
+        return royaltyReportDAO.getRoyaltyReport();
+    }
+
     // METODI PER CAMPAGNE MARKETING
     public void registraCampagnaMarketing(String id, String piattaforma, Double costo, Dipartimento dipartimento, Release release) throws BudgetException, DatabaseException, DatiInvalidiException{
         if (costo > dipartimento.getBudgetAnnuale()) {
