@@ -2,10 +2,7 @@ package gui;
 
 import controller.Controller;
 import eccezioni.DatabaseException;
-import model.Artista;
-import model.Manager;
-import model.Release;
-import model.RoyaltyReport;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,8 +22,10 @@ public class Home {
     private JButton btnVistaPersonale;
     private JButton btnVistaRelease;
     private JButton btnVistaRoyalty;
+    private JButton btnVistaCampagne;
 
     private JTable tabellaDati;
+
 
     private static JFrame frameHome;
     private Controller controller;
@@ -66,6 +65,8 @@ public class Home {
         btnVistaPersonale.addActionListener(e -> caricaTabellaPersonale());
         btnVistaRelease.addActionListener(e -> caricaTabellaRelease());
         btnVistaRoyalty.addActionListener(e -> caricaTabellaRoyalty());
+        btnVistaCampagne.addActionListener(e -> caricaTabellaCampagne());
+
 
        //Doppio click per la tabella artisti
         tabellaDati.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -88,7 +89,7 @@ public class Home {
                                 } else {
                                     StringBuilder messaggio = new StringBuilder("Release pubblicate da " + nomeArtista + ":\n\n");
                                     for (model.Release r : sueRelease) {
-                                        messaggio.append("💿 ").append(r.getTitolo())
+                                        messaggio.append(" ").append(r.getTitolo())
                                                 .append(" (Formato: ").append(r.getTipoFormato()).append(")\n");
                                     }
                                     JOptionPane.showMessageDialog(frameHome, messaggio.toString(),
@@ -192,7 +193,10 @@ public class Home {
             List<RoyaltyReport> lista = this.controller.getRoyaltyReport();
             String[] colonne = {"ID Report", "Periodo Riferimento", "Ricavi Totali", "Codice Release"};
             DefaultTableModel tableModel = new DefaultTableModel(colonne, 0) {
-                @Override public boolean isCellEditable(int row, int column) { return false; }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
             };
 
             for (RoyaltyReport r : lista) {
@@ -204,4 +208,23 @@ public class Home {
             JOptionPane.showMessageDialog(frameHome, "Errore DB Release:\n" + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
-}
+        private void caricaTabellaCampagne() {
+            vistaAttuale = "Campagne Marketing";
+            try {
+                List<CampagnaMarketing> lista = this.controller.getCampagneMarketing();
+                String[] colonne = {"ID Campagna", "Piattaforma", "Costo Stimato", "Release Promossa", "Dipartimento"};
+                DefaultTableModel tableModel = new DefaultTableModel(colonne, 0) {
+                    @Override public boolean isCellEditable(int row, int column) { return false; }
+                };
+
+                for (CampagnaMarketing c : lista) {
+                    tableModel.addRow(new Object[]{c.getIdCampagna(), c.getPiattaforma(), c.getCostoStimato(), c.getReleasePromossa(), c.getDipartimentoFinanziatore()});
+                }
+                tabellaDati.setModel(tableModel);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frameHome, "Errore DB Release:\n" + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+    }
+
+    }

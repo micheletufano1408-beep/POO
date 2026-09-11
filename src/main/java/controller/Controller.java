@@ -151,6 +151,9 @@ public class Controller {
 
         System.out.println("Campagna Registrata! Nuovo budget dipartimento: " + dipartimento.getBudgetAnnuale());
     }
+    public List<CampagnaMarketing> getCampagneMarketing() throws DatabaseException {
+        return campagnaMarketingDAO.getCampagneMarketing();
+    }
 
     public List<Dipartimento> getTuttiIDipartimenti() throws DatabaseException{
 
