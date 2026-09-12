@@ -7,4 +7,5 @@ import java.util.List;
 public interface ManagerDAO {
     void salvaManager(Manager manager) throws DatabaseException;
     List<Manager> getTuttiIManager() throws DatabaseException;
+    void eliminaManager(String idDipendente) throws DatabaseException;
 }

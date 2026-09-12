@@ -91,4 +91,22 @@ public class ArtistaImplementazionePostgresDAO implements ArtistaDAO {
 
         return listaArtisti;
     }
+    @Override
+    public void eliminaArtista(String id) throws DatabaseException {
+        String sql = "DELETE FROM artista WHERE id_artista = ?";
+
+        try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+            int righeEliminate = pstmt.executeUpdate();
+
+            if (righeEliminate == 0) {
+                throw new DatabaseException("Nessun artista trovato con questo ID.");
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Impossibile eliminare l'artista. Potrebbe avere delle Release collegate.\n" + e.getMessage());
+        }
+    }
 }

@@ -7,8 +7,6 @@ import java.util.List;
 public class Tecnico extends Personale {
     private String ruoloSpecializzato;
 
-
-
     public Tecnico(String idDipendente, String nome, String cognome, LocalDate dataAssunzione, String ruoloSpecializzato) {
         super(idDipendente, nome, cognome, dataAssunzione);
         this.ruoloSpecializzato = ruoloSpecializzato;

@@ -76,4 +76,21 @@ public class CampagnaMarketingImplementazionePostgresDAO implements CampagnaMark
 
         return lista;
     }
+    @Override
+    public void eliminaCampagna(String id) throws DatabaseException {
+        String sql = "DELETE FROM campagna_marketing WHERE id_campagna = ?";
+
+        try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+            int righeEliminate = pstmt.executeUpdate();
+            if (righeEliminate > 0) {
+                throw  new DatabaseException("Nessuna campagna associata a questo id.");
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Impossibile eliminare la campagna di marketing.\n" + e.getMessage());
+        }
+    }
 }

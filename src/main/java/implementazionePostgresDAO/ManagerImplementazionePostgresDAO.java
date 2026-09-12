@@ -59,4 +59,21 @@ public class ManagerImplementazionePostgresDAO implements ManagerDAO {
 
         return listaManager;
     }
+    @Override
+    public void eliminaManager(String id) throws DatabaseException {
+        String sql = "DELETE FROM manager WHERE id_dipendente = ?";
+
+        try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, id);
+            int righeEliminate = pstmt.executeUpdate();
+
+            if (righeEliminate == 0) {
+                throw new DatabaseException("Nessun manager trovato con questo ID.");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Errore durante L'eliminazione del manager: " + e.getMessage());
+        }
+    }
 }

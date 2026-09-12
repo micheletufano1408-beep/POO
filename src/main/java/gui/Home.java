@@ -68,42 +68,60 @@ public class Home {
         btnVistaCampagne.addActionListener(e -> caricaTabellaCampagne());
 
 
-       //Doppio click per la tabella artisti
+        //Doppio click per eliminare
         tabellaDati.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    if (vistaAttuale.equals("Artisti")) {
-                        try {
-                            int rigaSelezionata = tabellaDati.getSelectedRow();
-                            if (rigaSelezionata != -1) {
-                                String idArtista = tabellaDati.getValueAt(rigaSelezionata, 0).toString();
-                                String nomeArtista = tabellaDati.getValueAt(rigaSelezionata, 1).toString();
+                    int rigaSelezionata = tabellaDati.getSelectedRow();
+                    if (rigaSelezionata != -1) {
+                        String idRecord = tabellaDati.getValueAt(rigaSelezionata, 0).toString();
+                        String infoRecord = tabellaDati.getValueAt(rigaSelezionata, 1).toString();
 
-                                List<model.Release> sueRelease = Home.this.controller.getReleaseDiArtista(idArtista);
+                        int scelta = JOptionPane.showConfirmDialog(frameHome, "Sei sicuro di voler eliminare il record selezionato dal database?\nQuesta operazione è irreversibile.",
+                                "Conferma Eliminazione", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-                                if (sueRelease.isEmpty()) {
-                                    JOptionPane.showMessageDialog(frameHome,
-                                            nomeArtista + " non ha ancora pubblicato nessuna Release.",
-                                            "Discografia", JOptionPane.INFORMATION_MESSAGE);
-                                } else {
-                                    StringBuilder messaggio = new StringBuilder("Release pubblicate da " + nomeArtista + ":\n\n");
-                                    for (model.Release r : sueRelease) {
-                                        messaggio.append(" ").append(r.getTitolo())
-                                                .append(" (Formato: ").append(r.getTipoFormato()).append(")\n");
-                                    }
-                                    JOptionPane.showMessageDialog(frameHome, messaggio.toString(),
-                                            "Discografia: " + nomeArtista, JOptionPane.PLAIN_MESSAGE);
+                        if (scelta == JOptionPane.YES_OPTION) {
+                            try {
+                                switch (vistaAttuale) {
+                                    case "Artisti":
+                                        Home.this.controller.eliminaArtista(idRecord);
+                                        caricaTabellaArtisti();
+                                        break;
+                                    case "Personale":
+                                        String ruolo = tabellaDati.getValueAt(rigaSelezionata, 1).toString();
+                                        if (ruolo.equals("Manager")) {
+                                            Home.this.controller.eliminaManager(idRecord);
+                                        } else if (ruolo.equals("Tecnico")) {
+                                            Home.this.controller.eliminaTecnico(idRecord);
+                                        }
+                                        caricaTabellaPersonale();
+                                        break;
+                                    case "Release":
+                                        Home.this.controller.eliminaRelease(idRecord);
+                                        caricaTabellaRelease();
+                                        break;
+                                    case "Campagne Marketing":
+                                        Home.this.controller.eliminaCampagna(idRecord);
+                                        caricaTabellaCampagne();
+                                        break;
+                                    case "Royalty Report":
+                                        Home.this.controller.eliminaRoyalty(idRecord);
+                                        caricaTabellaRoyalty();
+                                        break;
                                 }
+                                JOptionPane.showMessageDialog(frameHome, "Eliminazione avvenuta con successo. ", "Successo",  JOptionPane.INFORMATION_MESSAGE);
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frameHome,
+                                        "Impossibile eliminare il record.\nVerifica che non sia collegato ad altri dati (Vincolo di Chiave Esterna).\n" + ex.getMessage(),
+                                        "Errore DB",
+                                        JOptionPane.ERROR_MESSAGE);
                             }
-                        } catch (DatabaseException ex) {
-                            JOptionPane.showMessageDialog(frameHome, "Impossibile caricare le release.\n" + ex.getMessage(), "Errore DB", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
             }
         });
-
 
         frameHome = new JFrame("Home Page Discografica");
         frameHome.setContentPane(this.mainPanel);
@@ -115,7 +133,7 @@ public class Home {
         caricaTabellaArtisti();
     }
 
-   //Metodi per popolare le tabelle
+    //Metodi per popolare le tabelle
 
     private void caricaTabellaArtisti() {
         vistaAttuale = "Artisti";
@@ -123,7 +141,10 @@ public class Home {
             List<Artista> lista = this.controller.getTuttiGliArtisti();
             String[] colonne = {"ID", "Nome d'Arte", "Genere", "Manager"};
             DefaultTableModel tableModel = new DefaultTableModel(colonne, 0) {
-                @Override public boolean isCellEditable(int row, int column) { return false; }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
             };
 
             for (Artista a : lista) {
@@ -145,7 +166,10 @@ public class Home {
 
             String[] colonne = {"ID Dipendente", "Ruolo", "Nome", "Cognome", "Data Assunzione", "Dettagli Aggiuntivi"};
             DefaultTableModel tableModel = new DefaultTableModel(colonne, 0) {
-                @Override public boolean isCellEditable(int row, int column) { return false; }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
             };
 
             for (Manager m : listaManager) {
@@ -175,7 +199,10 @@ public class Home {
             List<Release> lista = this.controller.getTutteLeRelease();
             String[] colonne = {"Codice", "Titolo", "Formato", "Data Pubblicazione", "Stato"};
             DefaultTableModel tableModel = new DefaultTableModel(colonne, 0) {
-                @Override public boolean isCellEditable(int row, int column) { return false; }
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
             };
 
             for (Release r : lista) {
@@ -187,6 +214,7 @@ public class Home {
             JOptionPane.showMessageDialog(frameHome, "Errore DB Release:\n" + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     private void caricaTabellaRoyalty() {
         vistaAttuale = "Royalty Report";
         try {
@@ -208,23 +236,27 @@ public class Home {
             JOptionPane.showMessageDialog(frameHome, "Errore DB Release:\n" + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
-        private void caricaTabellaCampagne() {
-            vistaAttuale = "Campagne Marketing";
-            try {
-                List<CampagnaMarketing> lista = this.controller.getCampagneMarketing();
-                String[] colonne = {"ID Campagna", "Piattaforma", "Costo Stimato", "Release Promossa", "Dipartimento"};
-                DefaultTableModel tableModel = new DefaultTableModel(colonne, 0) {
-                    @Override public boolean isCellEditable(int row, int column) { return false; }
-                };
 
-                for (CampagnaMarketing c : lista) {
-                    tableModel.addRow(new Object[]{c.getIdCampagna(), c.getPiattaforma(), c.getCostoStimato(), c.getReleasePromossa(), c.getDipartimentoFinanziatore()});
+    private void caricaTabellaCampagne() {
+        vistaAttuale = "Campagne Marketing";
+        try {
+            List<CampagnaMarketing> lista = this.controller.getCampagneMarketing();
+            String[] colonne = {"ID Campagna", "Piattaforma", "Costo Stimato", "Release Promossa", "Dipartimento"};
+            DefaultTableModel tableModel = new DefaultTableModel(colonne, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
                 }
-                tabellaDati.setModel(tableModel);
+            };
 
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frameHome, "Errore DB Release:\n" + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+            for (CampagnaMarketing c : lista) {
+                tableModel.addRow(new Object[]{c.getIdCampagna(), c.getPiattaforma(), c.getCostoStimato(), c.getReleasePromossa(), c.getDipartimentoFinanziatore()});
             }
+            tabellaDati.setModel(tableModel);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frameHome, "Errore DB Release:\n" + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    }
+}

@@ -1,6 +1,6 @@
 package controller;
 
-import dao.RoyaltyReportDAO;
+
 import eccezioni.BudgetException;
 import eccezioni.DatabaseException;
 import eccezioni.DatiInvalidiException;
@@ -48,6 +48,10 @@ public class Controller {
 
         System.out.println("Artista Registrato: " + nuovoArtista.getNomeArte());
     }
+    public void eliminaArtista(String idArtista) throws DatabaseException {
+        artistaDAO.eliminaArtista(idArtista);
+        System.out.println("Artista eliminato dal DB: " + idArtista);
+    }
 
     public List<Artista> getTuttiGliArtisti() throws DatabaseException{
 
@@ -72,6 +76,10 @@ public class Controller {
 
         return managerDAO.getTuttiIManager();
     }
+    public void eliminaManager(String idDipendente) throws DatabaseException{
+        managerDAO.eliminaManager(idDipendente);
+        System.out.println("Manager eliminato dal DB: " + idDipendente);
+    }
     // METODI PER TECNICI
     public void registraNuovoTecnico(String id, String nome, String cognome, LocalDate dataAssunzione, String ruoloSpecializzato) throws DatabaseException, DatiInvalidiException {
         if (id == null || id.trim().isEmpty() || nome == null || nome.trim().isEmpty() || cognome == null || cognome.trim().isEmpty() || ruoloSpecializzato == null || ruoloSpecializzato.trim().isEmpty()) {
@@ -86,6 +94,10 @@ public class Controller {
     }
     public List<Tecnico> getTuttiITecnici() throws DatabaseException {
         return tecnicoDAO.getTuttiITecnici();
+    }
+    public void eliminaTecnico(String idDipendente) throws DatabaseException {
+        tecnicoDAO.eliminaTecnico(idDipendente);
+        System.out.println("Tecnico eliminato dal DB: " + idDipendente);
     }
     //METODI PER RELEASE
     public void registraNuovaRelease(String codice, String titolo, String tipoFormato, LocalDate dataPubblicazione, String stato, Artista artista) throws DatabaseException, DatiInvalidiException {
@@ -104,6 +116,10 @@ public class Controller {
     public List<Release> getReleaseDiArtista(String idArtista) throws DatabaseException {
         return releaseDAO.getReleaseDiArtista(idArtista);
     }
+    public void eliminaRelease(String codiceRelease) throws DatabaseException {
+        releaseDAO.eliminaRelease(codiceRelease);
+        System.out.println("Release eliminata dal DB: " + codiceRelease);
+    }
     //METODI PER ROYALTY REPORT
     public void registraRoyaltyReport(String idReport, String periodo, Double ricavi, Release release) throws DatabaseException, DatiInvalidiException {
         if (idReport == null || idReport.trim().isEmpty() ||  periodo == null || periodo.trim().isEmpty() || ricavi == null || release == null) {
@@ -119,6 +135,10 @@ public class Controller {
     public List<RoyaltyReport> getRoyaltyReport() throws DatabaseException {
 
         return royaltyReportDAO.getRoyaltyReport();
+    }
+    public void eliminaRoyalty(String idReport) throws DatabaseException {
+        royaltyReportDAO.eliminaRoyaltyReport(idReport);
+        System.out.println("Royalty Report eliminato dal DB: " + idReport);
     }
 
     // METODI PER CAMPAGNE MARKETING
@@ -153,6 +173,10 @@ public class Controller {
     }
     public List<CampagnaMarketing> getCampagneMarketing() throws DatabaseException {
         return campagnaMarketingDAO.getCampagneMarketing();
+    }
+    public void eliminaCampagna(String idCampagna) throws DatabaseException {
+        campagnaMarketingDAO.eliminaCampagna(idCampagna);
+        System.out.println("Campagna Marketing eliminata dal DB: " + idCampagna);
     }
 
     public List<Dipartimento> getTuttiIDipartimenti() throws DatabaseException{

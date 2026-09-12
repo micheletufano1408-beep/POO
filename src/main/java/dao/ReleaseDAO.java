@@ -8,4 +8,5 @@ public interface ReleaseDAO {
     void salvaRelease(Release release) throws DatabaseException;
     List<Release> getTutteLeRelease() throws DatabaseException;
     List<Release> getReleaseDiArtista(String idArtista) throws DatabaseException;
+    void eliminaRelease (String idRelease) throws DatabaseException;
 }

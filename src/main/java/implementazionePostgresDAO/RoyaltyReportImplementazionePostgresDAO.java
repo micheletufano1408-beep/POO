@@ -66,4 +66,21 @@ public class RoyaltyReportImplementazionePostgresDAO implements RoyaltyReportDAO
 
         return listaRoyaltyReport;
     }
+    @Override
+    public void eliminaRoyaltyReport(String id) throws DatabaseException {
+        String sql = "DELETE FROM royalty_report WHERE id_report = ?";
+
+        try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, id);
+            int righeEliminate = pstmt.executeUpdate();
+            if (righeEliminate == 1) {
+                throw new DatabaseException("Nessun royalty report associato a questo id");
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Impossibile eliminare il Royalty Report.\n" + e.getMessage());
+        }
+    }
 }

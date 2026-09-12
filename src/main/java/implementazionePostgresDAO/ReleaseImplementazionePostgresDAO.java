@@ -114,4 +114,22 @@ public class ReleaseImplementazionePostgresDAO implements ReleaseDAO {
 
         return listaRelease;
     }
-}
+    @Override
+    public void eliminaRelease(String codice) throws DatabaseException {
+        String sql = "DELETE FROM release WHERE codice_catalogo = ?";
+
+        try (Connection conn = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, codice);
+            int righeEliminate = pstmt.executeUpdate();
+            if (righeEliminate == 0) {
+                throw new DatabaseException("Nessuna release trovata con questo ID.");
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Impossibile eliminare la release. Potrebbe avere campagne o report collegati.\n" + e.getMessage());
+        }
+    }
+
+    }
